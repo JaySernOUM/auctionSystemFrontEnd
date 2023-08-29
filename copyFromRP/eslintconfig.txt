@@ -1,0 +1,63 @@
+{
+  "env": {
+    "browser": true,
+    "es2022": true,
+    "node": true
+  },
+  "extends": ["airbnb-base", "next/core-web-vitals", "prettier"],
+  "parserOptions": {
+    "ecmaVersion": 2022,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "impliedStrict": true,
+      "jsx": true
+    },
+    "project": "tsconfig.json"
+  },
+  "rules": {
+    // @typescript-eslint/no-floating-promises, ignoreVoid is true by default
+    // We want to be able to explicitly allow floating promises on the UI
+    "no-void": ["error", { "allowAsStatement": true }]
+  },
+  "overrides": [
+    {
+      "files": ["*.ts", "*.tsx"],
+      "parser": "@typescript-eslint/parser",
+      "plugins": ["@typescript-eslint", "simple-import-sort"],
+      "extends": [
+        "airbnb-base",
+        "next/core-web-vitals",
+        "plugin:@typescript-eslint/recommended",
+        "plugin:@typescript-eslint/recommended-requiring-type-checking",
+        "plugin:@typescript-eslint/strict",
+        "prettier"
+      ],
+      "rules": {
+        "@typescript-eslint/explicit-function-return-type": ["error"],
+        "@typescript-eslint/consistent-type-exports": "error",
+        "@typescript-eslint/consistent-type-imports": "error",
+        // eslint-config-airbnb-base is not friendly to .ts extensions
+        // https://stackoverflow.com/a/59268871/7902371
+        "import/extensions": [
+          "error",
+          "ignorePackages",
+          {
+            "js": "never",
+            "jsx": "never",
+            "ts": "never",
+            "tsx": "never"
+          }
+        ],
+        "simple-import-sort/imports": "error",
+        "simple-import-sort/exports": "error"
+      }
+    },
+    {
+      "files": ["*.js", "*.ts", "*.tsx"],
+      "rules": {
+        // TODO: allow error console.log for logging error messages on server-side code. We should be using a structured logger
+        "no-console": ["error", { "allow": ["error"] }]
+      }
+    }
+  ]
+}
